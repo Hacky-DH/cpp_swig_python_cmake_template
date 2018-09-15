@@ -1,0 +1,58 @@
+Name: hello
+Version: @VERSION@
+Release: 1%{?dist}
+Summary: hello demo
+License: GPL
+Vendor: hello.com
+Group: System/Filesystems
+Packager: Hacky
+Prefix: /usr/local/hello
+
+BuildRoot: @ROOT@/rpmbuildroot
+
+BuildRequires: gcc-c++ >= 4.8.5
+BuildRequires: make
+BuildRequires: gtest
+BuildRequires: swig
+
+%define _builddir @ROOT@
+%define _rpmdir @ROOT@
+%define _build_name_fmt %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm
+
+%description
+hello
+
+%prep
+
+%build
+mkdir -p build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=%{prefix} ..
+make
+
+%install
+pushd build
+make DESTDIR=%{buildroot} install
+popd
+install -m 0755 -D python/%{name}.py %{buildroot}%{prefix}/python/%{name}.py
+install -m 0755 -D bin/%{name} %{buildroot}%{prefix}/bin/%{name}
+ln -rsf %{buildroot}%{prefix}/bin/%{name} %{buildroot}%{prefix}/bin/ho
+
+/bin/rm -rf %{buildroot}/usr/lib
+/bin/rm -rf %{buildroot}%{prefix}/include
+
+%files
+%{prefix}
+
+%pre
+
+%post
+sed -i "s#@INSTALL_PATH@#$RPM_INSTALL_PREFIX#" $RPM_INSTALL_PREFIX/python/%{name}.py
+sed -i "s#@INSTALL_PATH@#$RPM_INSTALL_PREFIX#" $RPM_INSTALL_PREFIX/bin/%{name}
+
+%preun
+
+%postun
+
+%clean
+/bin/rm -rf %{buildroot}
