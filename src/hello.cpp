@@ -79,11 +79,15 @@ std::vector<std::string> Hello::split(const char* str, const char* sep){
     log("INFO")<<"call split() str: "<<str<<std::endl;
     std::string src(str);
     std::vector<std::string> vs;
-    size_t start = 0, pos = src.find_first_of(sep);
+    size_t last = 0, pos = src.find_first_of(sep, last);
     while(pos != std::string::npos){
-        vs.push_back(src.substr(start, pos));
-        start = pos + 1;
-        pos = src.find_first_of(sep, pos);
+        vs.push_back(src.substr(last, pos-last));
+        last = pos + 1;
+        pos = src.find_first_of(sep, last);
+    }
+    if(pos-last > 0){
+        vs.push_back(src.substr(last, pos-last));
     }
     return vs;
 }
+

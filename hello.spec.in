@@ -27,7 +27,7 @@ hello
 %build
 mkdir -p build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=%{prefix} ..
+cmake3 -DCMAKE_INSTALL_PREFIX=%{prefix} ..
 make
 
 %install

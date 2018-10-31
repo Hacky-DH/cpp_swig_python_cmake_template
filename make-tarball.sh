@@ -12,7 +12,7 @@ pushd $cwd > /dev/null
 #build
 mkdir -p build
 pushd build > /dev/null
-cmake -DCMAKE_INSTALL_PREFIX=/hello .. && make
+cmake3 -DCMAKE_INSTALL_PREFIX=/hello .. && make
 popd > /dev/null
 
 #install
@@ -33,7 +33,6 @@ popd > /dev/null
 tarball="$cwd/hello-$version.tar.gz"
 pushd $buildroot > /dev/null
 tar -czf $tarball hello
-mv $tarball $cwd
 popd > /dev/null
 /bin/rm -fr $buildroot
 
