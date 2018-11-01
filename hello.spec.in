@@ -27,7 +27,9 @@ hello
 %build
 mkdir -p build
 cd build
-cmake3 -DCMAKE_INSTALL_PREFIX=%{prefix} ..
+CMAKE=cmake
+cmake3 --version > /dev/null 2>&1 && CMAKE=cmake3
+$CMAKE -DCMAKE_INSTALL_PREFIX=%{prefix} ..
 make
 
 %install
@@ -56,3 +58,4 @@ sed -i "s#@INSTALL_PATH@#$RPM_INSTALL_PREFIX#" $RPM_INSTALL_PREFIX/bin/%{name}
 
 %clean
 /bin/rm -rf %{buildroot}
+

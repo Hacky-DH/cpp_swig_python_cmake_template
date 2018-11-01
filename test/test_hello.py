@@ -17,11 +17,16 @@ def suit():
     sys.argv = ["hello_test"]
 
 def test_zero(suit, capsys):
-    with pytest.raises(SystemExit) as err:
+    if sys.version_info[0] == 2:
+        with pytest.raises(SystemExit) as err:
+            hello.main()
+        assert 2 == err.value.code
+        _, err = capsys.readouterr()
+        assert "error: too few arguments" in err, err
+    else:
         hello.main()
-    assert 2 == err.value.code
-    _, err = capsys.readouterr()
-    assert "error: too few arguments" in err, err
+        out, _ = capsys.readouterr()
+        assert "usage: hello_test" in out, out
 
 def test_version(suit, capsys):
     sys.argv.append("-v")
@@ -60,7 +65,10 @@ def test_add_zero(suit, capsys):
         hello.main()
     assert 2 == err.value.code
     _, err = capsys.readouterr()
-    assert "error: too few arguments" in err, err
+    if sys.version_info[0] == 2:
+        assert "error: too few arguments" in err, err
+    else:
+        assert "error: the following arguments are required: values" in err, err
 
 def test_add_one(suit, capsys):
     sys.argv.extend(["-vv","add",'8'])
@@ -89,7 +97,10 @@ def test_split_zero(suit, capsys):
         hello.main()
     assert 2 == err.value.code
     _, err = capsys.readouterr()
-    assert "error: too few arguments" in err, err
+    if sys.version_info[0] == 2:
+        assert "error: too few arguments" in err, err
+    else:
+        assert "error: the following arguments are required: str" in err, err
 
 def test_split_no(suit, capsys):
     sys.argv.extend(["-vv","split","teststr"])
@@ -118,3 +129,4 @@ def test_split_ok3(suit, capsys):
     out, err = capsys.readouterr()
     assert "teststr   testdir   hello" in out, out
     assert len(err) == 0
+

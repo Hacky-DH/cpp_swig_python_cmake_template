@@ -43,9 +43,10 @@ TEST_F(HelloTest, add1){
 }
 
 TEST_F(HelloTest, split){
-    std::vector<std::string> res = hello.split("ab bc cd", " ");
+    std::vector<std::string> res = hello.split("ab bc cd");
     EXPECT_EQ(3, res.size());
     EXPECT_STREQ("ab", res[0].c_str());
     EXPECT_STREQ("bc", res[1].c_str());
     EXPECT_STREQ("cd", res[2].c_str());
 }
+

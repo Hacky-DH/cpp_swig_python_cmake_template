@@ -6,26 +6,31 @@ version=$1
 
 echo "hello version $version"
 
+CMAKE=cmake
+cmake3 --version > /dev/null 2>&1 && CMAKE=cmake3
+
 cwd=$(cd $(dirname $0); pwd)
 pushd $cwd > /dev/null
 
 #build
 mkdir -p build
 pushd build > /dev/null
-cmake3 -DCMAKE_INSTALL_PREFIX=/hello .. && make
+$CMAKE -DCMAKE_INSTALL_PREFIX=/hello .. && make && make testcpp
 popd > /dev/null
 
 #install
-buildroot=tarball_build
+buildroot=$cwd/tarball_build
 /bin/rm -fr $buildroot
 mkdir -p $buildroot
 pushd build > /dev/null
-make DESTDIR=$cwd/$buildroot install
+make DESTDIR=$buildroot install
 popd > /dev/null
-rootdir=$cwd/$buildroot/hello
+rootdir=$buildroot/hello
+mkdir -p $rootdir
 /bin/cp -af bin python/hello.py install.sh $rootdir
 pushd $rootdir > /dev/null
-/bin/rm -fr include
+mkdir -p py_package
+/bin/cp -af $buildroot/usr/local/hello/py_package/* py_package
 /bin/ln -srf bin/hello bin/ho
 /bin/chmod 0755 bin/* install.sh
 popd > /dev/null

@@ -7,6 +7,7 @@ import argparse
 
 __all__ = ["login","hello_handler","add_handler","split_handler"]
 
+sys.path.append('/usr/local/hello/py_package')
 sys.path.append('@INSTALL_PATH@/py_package')
 
 if sys.version_info[0] == 2:
@@ -111,7 +112,13 @@ def main():
         verbose = parsed_args.verbose
     if verbose:
         print("cmd arguments: ", parsed_args)
-    return parsed_args.func(parsed_args)
+    # fix except in python3
+    try:
+        return parsed_args.func(parsed_args)
+    except AttributeError:
+        parser.print_help()
+        return 0
 
 if __name__ == "__main__":
     sys.exit(main())
+

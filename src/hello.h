@@ -2,7 +2,7 @@
 * hello
 * header file
 *
-* Hacky
+* DHacky
 */
 #ifndef HELLO_H
 #define HELLO_H
@@ -15,10 +15,11 @@ public:
     bool login(const char* user, const char* passwd);
     std::string hello();
     int add(const std::vector<int>& v);
-    std::vector<std::string> split(const char* str, const char* sep);
+    std::vector<std::string> split(const char* str, const char* sep = " ,:|;\n\r\t");
 };
 
 extern void set_log_dir(const char* dir);
 extern std::string version();
 
 #endif
+

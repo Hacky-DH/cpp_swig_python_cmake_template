@@ -5,7 +5,7 @@ prog="hello"
 cwd=$(cd $(dirname $0); pwd)
 pushd $cwd > /dev/null
 
-sed -i "s#@INSTALL_PATH@#$cwd#" python/${prog}.py
+sed -i "s#@INSTALL_PATH@#$cwd#" ${prog}.py
 sed -i "s#@INSTALL_PATH@#$cwd#" bin/${prog}
 
 if [[ $(whoami) == "root" ]];then
@@ -16,3 +16,4 @@ else
 fi
 
 echo "install ${prog} DONE"
+

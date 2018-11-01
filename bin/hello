@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
-# @INSTALL_PATH@/lib set by install.sh
+# INSTALL_PATH set by install.sh
 # LD_LIBRARY_PATH export the .so libs
 LD_LIBRARY_PATH=@INSTALL_PATH@/lib:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH
 python @INSTALL_PATH@/hello.py $*
+
