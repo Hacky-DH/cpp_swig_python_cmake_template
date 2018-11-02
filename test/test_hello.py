@@ -127,6 +127,6 @@ def test_split_ok3(suit, capsys):
     sys.argv.extend(["-vv","split","teststr.-;testdir,; hello"])
     assert 0 == hello.main()
     out, err = capsys.readouterr()
-    assert "teststr   testdir   hello" in out, out
+    assert "teststr testdir hello" in out, out
     assert len(err) == 0
 

@@ -76,18 +76,22 @@ int Hello::add(const std::vector<int>& v){
 }
 
 std::vector<std::string> Hello::split(const char* str, const char* sep){
+    std::vector<std::string> vs;
+    if(str == nullptr || *str == '\0'){
+        return vs;
+    }
+    if(sep == nullptr || *sep == '\0'){
+        return vs;
+    }
     log("INFO")<<"call split() str: "<<str<<std::endl;
     std::string src(str);
-    std::vector<std::string> vs;
-    size_t last = 0, pos = src.find_first_of(sep, last);
+    size_t start = 0, pos = 0;
     while(pos != std::string::npos){
-        vs.push_back(src.substr(last, pos-last));
-        last = pos + 1;
-        pos = src.find_first_of(sep, last);
-    }
-    if(pos-last > 0){
-        vs.push_back(src.substr(last, pos-last));
+        pos = src.find_first_of(sep, start);
+        if(pos != std::string::npos && pos - start > 0){
+            vs.push_back(src.substr(start, pos - start));
+        }
+        start = pos + 1;
     }
     return vs;
 }
-
