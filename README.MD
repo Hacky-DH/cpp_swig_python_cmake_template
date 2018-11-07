@@ -7,8 +7,8 @@ Also demostrate making rpm and tarball.
 ## Dependencies
 ```
 g++ >= 4.8.5
-swig >= 2.0.10 
-cmake >= 3.10 
+swig >= 2.0.10
+cmake >= 3.10
 gtest
 pytest
 python2 or python3
@@ -17,8 +17,8 @@ rpmbuild optional
 
 ## Build and test
 ```
-mkdir build
-cd build
+mkdir cmake-build
+cd cmake-build
 cmake ..
 make
 make testcpp

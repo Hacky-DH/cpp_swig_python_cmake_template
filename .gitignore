@@ -16,9 +16,11 @@ core
 *.core
 
 /logs
-/build
+/cmake-build
 
 hello.spec
 
 .pytest_cache
 __pycache__
+
+bazel-*

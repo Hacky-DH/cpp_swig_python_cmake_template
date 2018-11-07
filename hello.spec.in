@@ -25,15 +25,15 @@ hello
 %prep
 
 %build
-mkdir -p build
-cd build
+mkdir -p cmake-build
+cd cmake-build
 CMAKE=cmake
 cmake3 --version > /dev/null 2>&1 && CMAKE=cmake3
 $CMAKE -DCMAKE_INSTALL_PREFIX=%{prefix} ..
 make
 
 %install
-pushd build
+pushd cmake-build
 make DESTDIR=%{buildroot} install
 popd
 install -m 0755 -D python/%{name}.py %{buildroot}%{prefix}/python/%{name}.py

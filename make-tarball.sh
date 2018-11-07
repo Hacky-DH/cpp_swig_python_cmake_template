@@ -13,8 +13,8 @@ cwd=$(cd $(dirname $0); pwd)
 pushd $cwd > /dev/null
 
 #build
-mkdir -p build
-pushd build > /dev/null
+mkdir -p cmake-build
+pushd cmake-build > /dev/null
 $CMAKE -DCMAKE_INSTALL_PREFIX=/hello .. && make && make testcpp
 popd > /dev/null
 
@@ -22,7 +22,7 @@ popd > /dev/null
 buildroot=$cwd/tarball_build
 /bin/rm -fr $buildroot
 mkdir -p $buildroot
-pushd build > /dev/null
+pushd cmake-build > /dev/null
 make DESTDIR=$buildroot install
 popd > /dev/null
 rootdir=$buildroot/hello
